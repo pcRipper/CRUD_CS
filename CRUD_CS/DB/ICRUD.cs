@@ -1,22 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System.Collections.Generic;
+
+using CRUD_CS.DB.Entities;
 
 namespace CRUD_CS.DB
 {
     public interface ICRUD<ConnectionType>
     {
-        ConnectionType connect(Dictionary<string, string> settings);
+        KeyValuePair<ConnectionType,Exception> connect(Dictionary<string, string> settings);
 
-        DataTable Select<EntityType>(Func<EntityType, bool> predicate);
+        List<EntityType> Select<EntityType>(Predicate<EntityType> predicate) where EntityType : CRUD_Entityt<EntityType>, new();
 
-        bool Insert<EntityType>(List<EntityType> data);
+        bool Insert<EntityType>(List<EntityType> data) where EntityType : CRUD_Entityt<EntityType>, new();
 
-        bool Update<EntityType>(Func<EntityType, bool> predicate,Func<EntityType,EntityType> transformer);
+        bool Update<EntityType>(Predicate<EntityType> predicate, Action<EntityType> transformer);
 
-        bool Remove<EntityType>(Func<EntityType, bool> predicate);
+        bool Remove<EntityType>(Predicate<EntityType> predicate);
     }
 }

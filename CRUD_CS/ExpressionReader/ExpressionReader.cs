@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CRUD_CS.ExpressionReader
 {
@@ -226,6 +225,13 @@ namespace CRUD_CS.ExpressionReader
                     return this.Visit(nextExpression);
                 }
             }
+            else
+            {
+                sb.Append($"{m.Method.Name}(");
+                Expression result =  this.Visit(m.Arguments[0]);
+                sb.Append(")");
+                return result;
+            }
 
             throw new NotSupportedException(string.Format("The method '{0}' is not supported", m.Method.Name));
         }
@@ -247,12 +253,6 @@ namespace CRUD_CS.ExpressionReader
             return u;
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="b"></param>
-        /// <returns></returns>
         protected override Expression VisitBinary(BinaryExpression b)
         {
             sb.Append("(");
@@ -366,13 +366,26 @@ namespace CRUD_CS.ExpressionReader
 
         protected override Expression VisitMember(MemberExpression m)
         {
-            if (m.Expression != null && m.Expression.NodeType == ExpressionType.Parameter)
+            if (m.Expression != null)
             {
-                sb.Append(m.Member.Name);
-                return m;
+                switch (m.Expression.NodeType)
+                {
+                    case ExpressionType.Parameter:
+                        sb.Append(m.Member.Name);
+                        break;
+                    case ExpressionType.MemberAccess:
+                        sb.Append($"{m.Member.Name}(");
+                        Visit(m.Expression);
+                        sb.Append(")");
+                        break;
+                    default:
+                        throw new NotSupportedException(string.Format("The member '{0}' is not supported", m.Member.Name));
+                        break;
+                }
+
             }
 
-            throw new NotSupportedException(string.Format("The member '{0}' is not supported", m.Member.Name));
+            return m;
         }
 
         protected bool IsNullConstant(Expression exp)

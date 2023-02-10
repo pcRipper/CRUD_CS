@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace CRUD_CS.DB.Postgre
 {
-    class CRUD_Postgre : ICRUD<NpgsqlConnection>
+    class CRUD_Postgre : ICRUD
     {
-        public NpgsqlConnection connect(Dictionary<string, string> settings)
+        public NpgsqlConnection connect<NpgsqlConnection>(Dictionary<string, string> settings)
         {
             throw new NotImplementedException();
         }
@@ -20,17 +20,17 @@ namespace CRUD_CS.DB.Postgre
             throw new NotImplementedException();
         }
 
-        public bool Remove<EntityType>(Func<EntityType, bool> predicate)
+        public bool Remove<EntityType>(Predicate<EntityType> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public DataTable Select<EntityType>(Func<EntityType, bool> predicate)
+        public DataTable Select<EntityType>(Predicate<EntityType> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update<EntityType>(Func<EntityType, bool> predicate, Func<EntityType, EntityType> transformer)
+        public bool Update<EntityType>(Predicate<EntityType> predicate, Action<EntityType> transformer)
         {
             throw new NotImplementedException();
         }
