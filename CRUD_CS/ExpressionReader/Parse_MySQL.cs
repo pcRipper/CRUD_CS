@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace CRUD_CS.ExpressionReader
 {
+    //To do :
+    // DataFunctions : 
+    //  ADDDATE -> implemented only for days adding
+    //  CURDATE -> is not necessarily,beacause can be taken as a constant from C#
+    //  DATE
+    //  DATEDIFF
+    //   
+
     class Parser_MySQL : IParser
     {
         public Expression AddDays<Parser_MySQL>(MyQueryTranslator<Parser_MySQL> translator, MethodCallExpression method)

@@ -123,10 +123,8 @@ namespace CRUD_CS.ExpressionReader
         }
     }
 
-    public class MyQueryTranslator<Parser> : ExpressionVisitor
-        where Parser : IParser, new()
+    public class MyQueryTranslator : ExpressionVisitor
     {
-        private Parser local_evaluator = new Parser();
         private StringBuilder sb;
         private string _orderBy = string.Empty;
         private int? _skip = null;
@@ -228,16 +226,6 @@ namespace CRUD_CS.ExpressionReader
                             Expression nextExpression = m.Arguments[0];
                             return this.Visit(nextExpression);
                         }
-                        break;
-                    case "AddDays":
-
-                        return local_evaluator.AddDays(this,m);
-
-                        break;
-                    case "Date":
-
-
-
                         break;
                     default:
                         Console.WriteLine(m.Method.Name);
@@ -356,10 +344,10 @@ namespace CRUD_CS.ExpressionReader
                         break;
 
                     case TypeCode.String:
+
                         break;
 
                     case TypeCode.DateTime:
-                        sb.Append($"'{local_evaluator.RepresentDate(Convert.ToDateTime(c.Value))}'");
                         break;
 
                     case TypeCode.Object:
