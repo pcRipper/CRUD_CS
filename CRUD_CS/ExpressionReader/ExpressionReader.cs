@@ -123,14 +123,17 @@ namespace CRUD_CS.ExpressionReader
         }
     }
 
-    public class MyQueryTranslator<IParser> : ExpressionVisitor
+    public class MyQueryTranslator<Parser> : ExpressionVisitor
+        where Parser : IParser, new()
     {
-        private IParser local_evaluator;
+        private Parser local_evaluator = new Parser();
         private StringBuilder sb;
         private string _orderBy = string.Empty;
         private int? _skip = null;
         private int? _take = null;
         private string _whereClause = string.Empty;
+
+        public string QueryString { set { sb.Append(value); } }
 
         public int? Skip
         {
@@ -194,7 +197,8 @@ namespace CRUD_CS.ExpressionReader
                 this.Visit(lambda.Body);
                 return m;
             }
-            else {
+            else 
+            {
                 switch (m.Method.Name)
                 {
                     case "Take":
@@ -224,6 +228,16 @@ namespace CRUD_CS.ExpressionReader
                             Expression nextExpression = m.Arguments[0];
                             return this.Visit(nextExpression);
                         }
+                        break;
+                    case "AddDays":
+
+                        return local_evaluator.AddDays(this,m);
+
+                        break;
+                    case "Date":
+
+
+
                         break;
                     default:
                         Console.WriteLine(m.Method.Name);
@@ -345,12 +359,7 @@ namespace CRUD_CS.ExpressionReader
                         break;
 
                     case TypeCode.DateTime:
-                        //sb.Append("'");
-                        //sb.Append(c.Value);
-                        //sb.Append("'");
-
-                        local_evaluator.
-
+                        sb.Append($"'{local_evaluator.RepresentDate(Convert.ToDateTime(c.Value))}'");
                         break;
 
                     case TypeCode.Object:

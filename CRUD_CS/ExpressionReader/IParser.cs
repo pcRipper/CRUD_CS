@@ -9,7 +9,14 @@ namespace CRUD_CS.ExpressionReader
 {
     public interface IParser
     {
+        //String Functions
+
+        //Numeric Functions
+
+        //Date Functions
         public string RepresentDate(DateTime date);
-        public string CONCAT(Expression e); 
+        public Expression AddDays<Parser>(MyQueryTranslator<Parser> translator, MethodCallExpression method)
+            where Parser : IParser, new(); 
+
     }
 }

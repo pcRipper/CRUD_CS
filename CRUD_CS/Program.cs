@@ -13,10 +13,12 @@ namespace CRUD_CS
         {
             int k = 0;
 
-            MyQueryTranslator translator = new MyQueryTranslator();
+            DateTime date = DateTime.Now;
 
-            Expression<Predicate<User>> exp = (x) =>  x._name.Length < 5 && x.dob.ADDDATE_DAYS(2) > new DateTime(2002,12,1);
-            Expression<Predicate<User>> exp2 = (x) =>  new DateTime(2005,12,2) > new DateTime(2002,12,1) && new int?(12) > 2;
+            MyQueryTranslator<Parser_MySQL> translator = new MyQueryTranslator<Parser_MySQL>();
+
+            Expression<Predicate<User>> exp = (x) =>  x._name.Length < 5 && x.dob > new DateTime(2002,12,1);
+            Expression<Predicate<User>> exp2 = (x) => new DateTime(2005, 12, 2) > new DateTime(2002, 12, 1).AddDays(2) && new int?(12) > 2;
 
             Console.WriteLine(translator.Translate(exp2));
 
