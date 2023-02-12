@@ -15,9 +15,10 @@ namespace CRUD_CS
 
             MyQueryTranslator translator = new MyQueryTranslator();
 
-            Expression<Predicate<User>> exp = (x) => x.age.FLOOR() > 12.5 && x._name.Length < 5;
+            Expression<Predicate<User>> exp = (x) =>  x._name.Length < 5 && x.dob.ADDDATE_DAYS(2) > new DateTime(2002,12,1);
+            Expression<Predicate<User>> exp2 = (x) =>  new DateTime(2005,12,2) > new DateTime(2002,12,1) && new int?(12) > 2;
 
-            Console.WriteLine(translator.Translate(exp));
+            Console.WriteLine(translator.Translate(exp2));
 
         }
     }

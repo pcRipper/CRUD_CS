@@ -17,6 +17,8 @@ namespace CRUD_CS.DB.TypesFunctionalExtensions
         public static double FLOOR(this double x) => x;
         public static int FLOOR(this int x) => x;
         public static float FLOOR(this float x) => x;
+
+        public static DateTime ADDDATE_DAYS(this DateTime date, int days) => date.AddDays(days);
     }
 
 }

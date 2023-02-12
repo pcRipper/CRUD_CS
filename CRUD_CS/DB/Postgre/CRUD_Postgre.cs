@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using CRUD_CS.DB.Entities;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace CRUD_CS.DB.Postgre
 {
-    class CRUD_Postgre : ICRUD
+    class CRUD_Postgre : ICRUD<NpgsqlConnection>
     {
-        public NpgsqlConnection connect<NpgsqlConnection>(Dictionary<string, string> settings)
+        public KeyValuePair<NpgsqlConnection, Exception> connect(Dictionary<string, string> settings)
         {
             throw new NotImplementedException();
         }
 
-        public bool Insert<EntityType>(List<EntityType> data)
+        public bool Insert<EntityType>(List<EntityType> data) where EntityType : CRUD_Entityt<EntityType>, new()
         {
             throw new NotImplementedException();
         }
@@ -25,7 +26,7 @@ namespace CRUD_CS.DB.Postgre
             throw new NotImplementedException();
         }
 
-        public DataTable Select<EntityType>(Predicate<EntityType> predicate)
+        public List<EntityType> Select<EntityType>(Predicate<EntityType> predicate) where EntityType : CRUD_Entityt<EntityType>, new()
         {
             throw new NotImplementedException();
         }

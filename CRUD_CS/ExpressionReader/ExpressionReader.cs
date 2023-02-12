@@ -123,8 +123,9 @@ namespace CRUD_CS.ExpressionReader
         }
     }
 
-    public class MyQueryTranslator : ExpressionVisitor
+    public class MyQueryTranslator<IParser> : ExpressionVisitor
     {
+        private IParser local_evaluator;
         private StringBuilder sb;
         private string _orderBy = string.Empty;
         private int? _skip = null;
@@ -193,44 +194,44 @@ namespace CRUD_CS.ExpressionReader
                 this.Visit(lambda.Body);
                 return m;
             }
-            else if (m.Method.Name == "Take")
-            {
-                if (this.ParseTakeExpression(m))
+            else {
+                switch (m.Method.Name)
                 {
-                    Expression nextExpression = m.Arguments[0];
-                    return this.Visit(nextExpression);
+                    case "Take":
+                        if (this.ParseTakeExpression(m))
+                        {
+                            Expression nextExpression = m.Arguments[0];
+                            return this.Visit(nextExpression);
+                        }
+                        break;
+                    case "Skip":
+                        if (this.ParseSkipExpression(m))
+                        {
+                            Expression nextExpression = m.Arguments[0];
+                            return this.Visit(nextExpression);
+                        }
+                        break;
+                    case "OrderBy":
+                        if (this.ParseOrderByExpression(m, "ASC"))
+                        {
+                            Expression nextExpression = m.Arguments[0];
+                            return this.Visit(nextExpression);
+                        }
+                        break;
+                    case "OrderByDescending":
+                        if (this.ParseOrderByExpression(m, "DESC"))
+                        {
+                            Expression nextExpression = m.Arguments[0];
+                            return this.Visit(nextExpression);
+                        }
+                        break;
+                    default:
+                        Console.WriteLine(m.Method.Name);
+                        sb.Append($"{m.Method.Name}(");
+                        Expression result = this.Visit(m.Arguments[0]);
+                        sb.Append(")");
+                        return result;
                 }
-            }
-            else if (m.Method.Name == "Skip")
-            {
-                if (this.ParseSkipExpression(m))
-                {
-                    Expression nextExpression = m.Arguments[0];
-                    return this.Visit(nextExpression);
-                }
-            }
-            else if (m.Method.Name == "OrderBy")
-            {
-                if (this.ParseOrderByExpression(m, "ASC"))
-                {
-                    Expression nextExpression = m.Arguments[0];
-                    return this.Visit(nextExpression);
-                }
-            }
-            else if (m.Method.Name == "OrderByDescending")
-            {
-                if (this.ParseOrderByExpression(m, "DESC"))
-                {
-                    Expression nextExpression = m.Arguments[0];
-                    return this.Visit(nextExpression);
-                }
-            }
-            else
-            {
-                sb.Append($"{m.Method.Name}(");
-                Expression result =  this.Visit(m.Arguments[0]);
-                sb.Append(")");
-                return result;
             }
 
             throw new NotSupportedException(string.Format("The method '{0}' is not supported", m.Method.Name));
@@ -341,15 +342,15 @@ namespace CRUD_CS.ExpressionReader
                         break;
 
                     case TypeCode.String:
-                        sb.Append("'");
-                        sb.Append(c.Value);
-                        sb.Append("'");
                         break;
 
                     case TypeCode.DateTime:
-                        sb.Append("'");
-                        sb.Append(c.Value);
-                        sb.Append("'");
+                        //sb.Append("'");
+                        //sb.Append(c.Value);
+                        //sb.Append("'");
+
+                        local_evaluator.
+
                         break;
 
                     case TypeCode.Object:
@@ -386,6 +387,24 @@ namespace CRUD_CS.ExpressionReader
             }
 
             return m;
+        }
+
+        protected override Expression VisitNew(NewExpression node)
+        {
+            var constructor = node.Constructor;
+            var constructorParameters = constructor.GetParameters();
+            var arguments = new object[constructorParameters.Length];
+
+            for (int i = 0; i < constructorParameters.Length; i++)
+            {
+                var argumentExpression = node.Arguments[i];
+                var argumentValue = Expression.Lambda(argumentExpression).Compile().DynamicInvoke();
+                arguments[i] = argumentValue;
+            }
+
+            var instance = constructor.Invoke(arguments);
+
+            return this.VisitConstant(Expression.Constant(instance));
         }
 
         protected bool IsNullConstant(Expression exp)
