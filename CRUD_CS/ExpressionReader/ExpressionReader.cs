@@ -125,11 +125,11 @@ namespace CRUD_CS.ExpressionReader
 
     public class MyQueryTranslator : ExpressionVisitor
     {
-        private StringBuilder sb;
-        private string _orderBy = string.Empty;
-        private int? _skip = null;
-        private int? _take = null;
-        private string _whereClause = string.Empty;
+        protected StringBuilder sb;
+        protected string _orderBy = string.Empty;
+        protected int? _skip = null;
+        protected int? _take = null;
+        protected string _whereClause = string.Empty;
 
         public string QueryString { set { sb.Append(value); } }
 
@@ -342,14 +342,6 @@ namespace CRUD_CS.ExpressionReader
                     case TypeCode.Boolean:
                         sb.Append(((bool)c.Value) ? 1 : 0);
                         break;
-
-                    case TypeCode.String:
-
-                        break;
-
-                    case TypeCode.DateTime:
-                        break;
-
                     case TypeCode.Object:
                         throw new NotSupportedException(string.Format("The constant for '{0}' is not supported", c.Value));
 

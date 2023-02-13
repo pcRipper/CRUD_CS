@@ -15,25 +15,29 @@ namespace CRUD_CS.ExpressionReader
     //  DATEDIFF
     //   
 
-    class Parser_MySQL : IParser
+    public interface Parser_MySQL
     {
-        public Expression AddDays<Parser_MySQL>(MyQueryTranslator<Parser_MySQL> translator, MethodCallExpression method)
-            where Parser_MySQL : IParser, new()
-        {
+        public Expression AddDays(MyQueryTranslator translator, MethodCallExpression method);
+        public string RepresentDate(DateTime date);
 
+    }
+
+    public class Parser_MySQL_Basic : Parser_MySQL
+    {
+        public Expression AddDays(MyQueryTranslator translator, MethodCallExpression method)
+        { 
             translator.QueryString = "ADDDATE(";
             translator.Visit(method.Object);
             translator.QueryString = ",";
             translator.Visit(method.Arguments[0]);
             translator.QueryString = ")";
 
-            return null;   
+            return null;
         }
 
         public string RepresentDate(DateTime date)
         {
-            return date.ToString("dd-MM-yyyy");
+            return $"'{date.ToString("dd-MM-yyyy")}'";
         }
-
     }
 }

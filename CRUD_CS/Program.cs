@@ -15,7 +15,7 @@ namespace CRUD_CS
 
             DateTime date = DateTime.Now;
 
-            MyQueryTranslator<Parser_MySQL> translator = new MyQueryTranslator<Parser_MySQL>();
+            MySQL_Translator<Parser_MySQL_Basic> translator = new MySQL_Translator<Parser_MySQL_Basic>();
 
             Expression<Predicate<User>> exp = (x) =>  x._name.Length < 5 && x.dob > new DateTime(2002,12,1);
             Expression<Predicate<User>> exp2 = (x) => new DateTime(2005, 12, 2) > new DateTime(2002, 12, 1).AddDays(2) && new int?(12) > 2;

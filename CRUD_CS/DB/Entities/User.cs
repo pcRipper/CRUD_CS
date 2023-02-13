@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.Data.Entity;
-
 namespace CRUD_CS.DB.Entities
 {
     class User
