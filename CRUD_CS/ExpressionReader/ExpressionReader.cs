@@ -317,6 +317,13 @@ namespace CRUD_CS.ExpressionReader
                     sb.Append(" >= ");
                     break;
 
+                case ExpressionType.Divide:
+                    sb.Append(" / ");
+                    break;
+                case ExpressionType.Multiply:
+                    sb.Append(" * ");
+                    break;
+
                 default:
                     throw new NotSupportedException(string.Format("The binary operator '{0}' is not supported", b.NodeType));
 
@@ -372,7 +379,6 @@ namespace CRUD_CS.ExpressionReader
                         throw new NotSupportedException(string.Format("The member '{0}' is not supported", m.Member.Name));
                         break;
                 }
-
             }
 
             return m;

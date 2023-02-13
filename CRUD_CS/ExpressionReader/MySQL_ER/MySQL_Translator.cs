@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRUD_CS.ExpressionReader
+namespace CRUD_CS.ExpressionReader.MySQL_ER
 {
     class MySQL_Translator<Parser> : MyQueryTranslator
         where Parser : Parser_MySQL,new()
