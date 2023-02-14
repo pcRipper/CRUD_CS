@@ -12,12 +12,13 @@ namespace CRUD_CS.ExpressionReader
     //  ADDDATE -> implemented only for days adding
     //  CURDATE -> is not necessarily,beacause can be taken as a constant from C#
     //  DATE
-    //  DATEDIFF
+    //  DATEDIFF -> impelemented as DATEDIFF in MySQL_FEX, return type int (as difference in days)
     //   
 
     public interface Parser_MySQL
     {
         public Expression AddDays(MyQueryTranslator translator, MethodCallExpression method);
+        public Expression DATEDIFF(MyQueryTranslator translator, MethodCallExpression method);
         public string RepresentDate(DateTime date);
 
     }
@@ -25,11 +26,23 @@ namespace CRUD_CS.ExpressionReader
     public class Parser_MySQL_Basic : Parser_MySQL
     {
         public Expression AddDays(MyQueryTranslator translator, MethodCallExpression method)
-        { 
+        {
             translator.QueryString = "ADDDATE(";
             translator.Visit(method.Object);
             translator.QueryString = ",";
             translator.Visit(method.Arguments[0]);
+            translator.QueryString = ")";
+
+            return null;
+        }
+
+        public Expression DATEDIFF(MyQueryTranslator translator, MethodCallExpression method)
+        {
+
+            translator.QueryString = "DATEDIFF(";
+            translator.Visit(method.Arguments[0]);
+            translator.QueryString = ",";
+            translator.Visit(method.Arguments[1]);
             translator.QueryString = ")";
 
             return null;

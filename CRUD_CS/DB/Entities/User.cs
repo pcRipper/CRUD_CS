@@ -8,20 +8,20 @@ namespace CRUD_CS.DB.Entities
 {
     class User
     {
-        public User(string email, string password, string name, string surname, int age, DateTime dob)
+        public User(string _email, string _password, string _name, string _surname, int _age, DateTime _dob)
         {
-            _email = email;
-            _password = password;
-            _name = name;
-            _surname = surname;
-            this.age = age;
-            this.dob = dob;
+            this._email = _email;
+            this._password = _password;
+            this._name = _name;
+            this._surname = _surname;
+            this._age = _age;
+            this._dob = _dob;
         }
         public string _email { get; set; }
         public string _password { get; set; }
         public string _name { get; set; }
         public string _surname { get; set; }
-        public int age { get; set; }
-        public DateTime dob { get; set; }
+        public int _age { get; set; }
+        public DateTime _dob { get; set; }
     }
 }

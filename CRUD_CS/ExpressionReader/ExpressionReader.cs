@@ -323,7 +323,9 @@ namespace CRUD_CS.ExpressionReader
                 case ExpressionType.Multiply:
                     sb.Append(" * ");
                     break;
-
+                case ExpressionType.Add :
+                    sb.Append(" + ");
+                    break;
                 default:
                     throw new NotSupportedException(string.Format("The binary operator '{0}' is not supported", b.NodeType));
 
@@ -351,7 +353,9 @@ namespace CRUD_CS.ExpressionReader
                         break;
                     case TypeCode.Object:
                         throw new NotSupportedException(string.Format("The constant for '{0}' is not supported", c.Value));
-
+                    case TypeCode.String:
+                        sb.Append($"'{c.Value}'");
+                        break;
                     default:
                         sb.Append(c.Value);
                         break;
@@ -386,20 +390,26 @@ namespace CRUD_CS.ExpressionReader
 
         protected override Expression VisitNew(NewExpression node)
         {
-            var constructor = node.Constructor;
-            var constructorParameters = constructor.GetParameters();
-            var arguments = new object[constructorParameters.Length];
-
-            for (int i = 0; i < constructorParameters.Length; i++)
+            if (node.Constructor != null && node.Constructor.GetParameters().Length > 0)
             {
-                var argumentExpression = node.Arguments[i];
-                var argumentValue = Expression.Lambda(argumentExpression).Compile().DynamicInvoke();
-                arguments[i] = argumentValue;
+                var constructor = node.Constructor;
+                var constructorParameters = constructor.GetParameters();
+                var arguments = new object[constructorParameters.Length];
+
+                for (int i = 0; i < constructorParameters.Length; i++)
+                {
+                    var argumentExpression = node.Arguments[i];
+                    var argumentValue = Expression.Lambda(argumentExpression).Compile().DynamicInvoke();
+                    arguments[i] = argumentValue;
+                }
+
+                var instance = constructor.Invoke(arguments);
+
+                return this.VisitConstant(Expression.Constant(instance));
             }
 
-            var instance = constructor.Invoke(arguments);
+            return null;
 
-            return this.VisitConstant(Expression.Constant(instance));
         }
 
         protected bool IsNullConstant(Expression exp)

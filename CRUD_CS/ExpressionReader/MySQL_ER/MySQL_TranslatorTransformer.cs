@@ -18,7 +18,7 @@ namespace CRUD_CS.ExpressionReader.MySQL_ER
         }
         protected override Expression VisitMember(MemberExpression m)
         {
-            if (m.Type.FullName == "System.DateTime")
+            if (m.Expression == null && m.Type.FullName == "System.DateTime")
             {
                 switch (m.Member.Name)
                 {

@@ -45,9 +45,50 @@ namespace CRUD_CS.ExpressionReader.MySQL_ER
                 case "AddDays" :
                     return parser.AddDays(this, m);
                 break;
+                case "DATEDIFF" :
+                    return parser.DATEDIFF(this, m);
+                break;
                 default:
                     return base.VisitMethodCall(m);
                 break;
+            }
+        }
+
+        protected override Expression VisitNew(NewExpression node)
+        {
+            if (node.Constructor == null)
+            {
+                switch (node.Type.FullName)
+                {
+                    case "System.DateTime":
+                        return Visit(Expression.Constant(new DateTime(1, 1, 1)));
+                    break;
+                }
+
+                return null;
+            }
+            else
+            {
+                return base.VisitNew(node);
+            }
+        }
+
+        protected override Expression VisitMember(MemberExpression m)
+        {
+            if (m.Expression == null && m.Type.FullName == "System.DateTime")
+            {
+                switch (m.Member.Name)
+                {
+                    case "Now":
+                        sb.Append(parser.RepresentDate(DateTime.Now));
+                        break;
+                }
+
+                return m;
+            }
+            else
+            {
+                return base.VisitMember(m);
             }
         }
     }
