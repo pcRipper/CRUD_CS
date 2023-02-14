@@ -10,13 +10,10 @@ namespace CRUD_CS.DB
     public interface ICRUD<ConnectionType>
     {
         KeyValuePair<ConnectionType,Exception> connect(Dictionary<string, string> settings);
-
-        List<EntityType> Select<EntityType>(Predicate<EntityType> predicate) where EntityType : CRUD_Entityt<EntityType>, new();
-
         bool Insert<EntityType>(List<EntityType> data) where EntityType : CRUD_Entityt<EntityType>, new();
+        List<EntityType> Select<EntityType>(Expression<Predicate<EntityType>> predicate) where EntityType : CRUD_Entityt<EntityType>, new();
+        bool Update<EntityType>(Expression<Predicate<EntityType>> predicate, Expression<Func<EntityType,EntityType>> transformer);
 
-        bool Update<EntityType>(Predicate<EntityType> predicate, Action<EntityType> transformer);
-
-        bool Remove<EntityType>(Predicate<EntityType> predicate);
+        bool Remove<EntityType>(Expression<Predicate<EntityType>> predicate);
     }
 }

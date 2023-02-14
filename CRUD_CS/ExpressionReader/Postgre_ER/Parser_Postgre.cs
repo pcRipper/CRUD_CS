@@ -5,17 +5,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRUD_CS.ExpressionReader.MySQL_ER
+namespace CRUD_CS.ExpressionReader.Postgre_ER
 {
-    //To do :
-    // DataFunctions : 
-    //  ADDDATE -> implemented only for days adding
-    //  CURDATE -> is not necessarily,beacause can be taken as a constant from C#
-    //  DATE
-    //  DATEDIFF -> impelemented as DATEDIFF in MySQL_FEX, return type int (as difference in days)
-    //   
-
-    public interface Parser_MySQL
+    public interface Parser_Postgre
     {
         public Expression StringLength(MyQueryTranslator translator, MemberExpression member);
         public Expression AddDays(MyQueryTranslator translator, MethodCallExpression method);
@@ -24,7 +16,7 @@ namespace CRUD_CS.ExpressionReader.MySQL_ER
 
     }
 
-    public class Parser_MySQL_Basic : Parser_MySQL
+    public class Parser_Postgre_Basic : Parser_Postgre
     {
         public Expression AddDays(MyQueryTranslator translator, MethodCallExpression method)
         {

@@ -5,14 +5,14 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRUD_CS.ExpressionReader.MySQL_ER
+namespace CRUD_CS.ExpressionReader.Postgre_ER
 {
-    class MySQL_Translator<Parser> : MyQueryTranslator
-        where Parser : Parser_MySQL,new()
+    class Postgre_Translator<Parser> : MyQueryTranslator
+            where Parser : Parser_Postgre, new()
     {
         private Parser parser;
 
-        public MySQL_Translator()
+        public Postgre_Translator()
         {
             parser = new Parser();
         }
@@ -20,19 +20,19 @@ namespace CRUD_CS.ExpressionReader.MySQL_ER
         {
             switch (Type.GetTypeCode(c.Value.GetType()))
             {
-                case TypeCode.DateTime :
+                case TypeCode.DateTime:
 
                     sb.Append(parser.RepresentDate(Convert.ToDateTime(c.Value)));
 
-                break;
-                case TypeCode.String :
+                    break;
+                case TypeCode.String:
 
                     sb.Append($"'{c.Value.ToString()}'");
 
-                break;
-                default :
+                    break;
+                default:
                     return base.VisitConstant(c);
-                break;
+                    break;
             }
 
             return c;
@@ -42,15 +42,15 @@ namespace CRUD_CS.ExpressionReader.MySQL_ER
         {
             switch (m.Method.Name)
             {
-                case "AddDays" :
+                case "AddDays":
                     return parser.AddDays(this, m);
-                break;
-                case "DATEDIFF" :
+                    break;
+                case "DATEDIFF":
                     return parser.DATEDIFF(this, m);
-                break;
+                    break;
                 default:
                     return base.VisitMethodCall(m);
-                break;
+                    break;
             }
         }
 
@@ -62,7 +62,7 @@ namespace CRUD_CS.ExpressionReader.MySQL_ER
                 {
                     case "System.DateTime":
                         return Visit(Expression.Constant(new DateTime(1, 1, 1)));
-                    break;
+                        break;
                 }
 
                 return null;
@@ -88,19 +88,19 @@ namespace CRUD_CS.ExpressionReader.MySQL_ER
             {
                 switch (m.Expression.NodeType)
                 {
-                    case ExpressionType.MemberAccess :
+                    case ExpressionType.MemberAccess:
 
                         switch (m.Member.Name)
                         {
                             case "Length":
                                 parser.StringLength(this, m);
-                            break;
+                                break;
                         }
 
-                    break;
+                        break;
                     default:
                         return base.VisitMember(m);
-                    break;
+                        break;
 
                 }
 

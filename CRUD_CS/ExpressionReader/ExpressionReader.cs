@@ -374,11 +374,6 @@ namespace CRUD_CS.ExpressionReader
                     case ExpressionType.Parameter:
                         sb.Append(m.Member.Name);
                         break;
-                    case ExpressionType.MemberAccess:
-                        sb.Append($"{m.Member.Name}(");
-                        Visit(m.Expression);
-                        sb.Append(")");
-                        break;
                     default:
                         throw new NotSupportedException(string.Format("The member '{0}' is not supported", m.Member.Name));
                         break;
