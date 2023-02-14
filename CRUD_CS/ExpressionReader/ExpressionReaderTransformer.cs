@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
+﻿using System.Linq.Expressions;
 
 namespace CRUD_CS.ExpressionReader
 {
@@ -12,7 +8,7 @@ namespace CRUD_CS.ExpressionReader
         {
             bool added = false;
 
-            for (int k = 0;k < node.Arguments.Count; k++)
+            for (int k = 0; k < node.Arguments.Count; k++)
             {
                 var argument = node.Arguments[k];
                 string name = node.Constructor.GetParameters()[k].Name;
@@ -22,10 +18,10 @@ namespace CRUD_CS.ExpressionReader
                 sb.Append($"{name} = ");
                 this.Visit(argument);
 
-                if(added == true)
+                if (added == true)
                 {
                     sb.Append(", ");
-                    }
+                }
             }
 
             return node;

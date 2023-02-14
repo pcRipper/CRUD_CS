@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
+﻿using CRUD_CS.DB.Entities;
 using CRUD_CS.DB.MySQL;
-using CRUD_CS.DB.TypesFunctionalExtensions;
-using CRUD_CS.DB.Entities;
-using CRUD_CS.ExpressionReader;
 using CRUD_CS.ExpressionReader.MySQL_ER;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace CRUD_CS
 {
@@ -18,7 +16,7 @@ namespace CRUD_CS
             MySQL_Translator<Parser_MySQL_Basic> translator = new MySQL_Translator<Parser_MySQL_Basic>();
             MySQL_TranslatorTransformer<Parser_MySQL_Basic> translator_transform = new MySQL_TranslatorTransformer<Parser_MySQL_Basic>();
 
-            Expression<Func<_User, _User>> act = x => new _User(x._email,x._password,x._name + "_hello",x._surname,x._dob,x._sallary*2*2);
+            Expression<Func<_User, _User>> act = x => new _User(x._email, x._password, x._name + "_hello", x._surname, x._dob, x._sallary * 2 * 2);
 
             //Console.WriteLine(translator.Translate());
             Console.WriteLine(translator_transform.Translate(act));
@@ -43,7 +41,7 @@ namespace CRUD_CS
 
             //crud.Update<_User>(x => true, x => new _User(x._email, x._password, x._name, x._surname, x._dob, x._sallary * 2));
 
-            crud.Update<_User>(x => true,x => new _User(x._email, x._password, x._name + "_hello", x._surname, x._dob, x._sallary * 2 * 2));
+            crud.Update<_User>(x => true, x => new _User(x._email, x._password, x._name + "_hello", x._surname, x._dob, x._sallary * 2 * 2));
 
             //translatorTests();
 

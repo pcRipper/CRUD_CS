@@ -1,13 +1,9 @@
 ﻿using CRUD_CS.DB.Entities;
+using CRUD_CS.ExpressionReader.MySQL_ER;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using CRUD_CS.ExpressionReader.MySQL_ER;
 using System.Linq.Expressions;
 
 namespace CRUD_CS.DB.MySQL
@@ -45,7 +41,7 @@ namespace CRUD_CS.DB.MySQL
                     return new KeyValuePair<SqlConnection, Exception>(connection, null);
                 }
 
-                return new KeyValuePair<SqlConnection, Exception>(null,new Exception("connection error!"));
+                return new KeyValuePair<SqlConnection, Exception>(null, new Exception("connection error!"));
             }
             catch (Exception error)
             {
@@ -53,7 +49,7 @@ namespace CRUD_CS.DB.MySQL
             }
         }
 
-        private KeyValuePair<DataTable,Exception> pushQuery(string query)
+        private KeyValuePair<DataTable, Exception> pushQuery(string query)
         {
             if (isConnected)
             {
@@ -64,7 +60,7 @@ namespace CRUD_CS.DB.MySQL
                     adapter.Fill(ds);
 
                     return new KeyValuePair<DataTable, Exception>(
-                        (ds.Tables.Count > 0)? ds.Tables[0] : null,
+                        (ds.Tables.Count > 0) ? ds.Tables[0] : null,
                         null
                     );
                 }
@@ -84,7 +80,7 @@ namespace CRUD_CS.DB.MySQL
 
             string query = $"INSERT INTO {typeof(EntityType).Name} VALUES ";
 
-            foreach(EntityType row in data)
+            foreach (EntityType row in data)
             {
                 query += $"({row.toQuery()}),";
             }
@@ -108,8 +104,8 @@ namespace CRUD_CS.DB.MySQL
             EntityType rowParser = new EntityType();
 
             if (result.Key == null) return data;
-            
-            foreach(DataRow row in result.Key.Rows)
+
+            foreach (DataRow row in result.Key.Rows)
             {
                 data.Add(rowParser.fromQuery(row));
             }
@@ -123,8 +119,8 @@ namespace CRUD_CS.DB.MySQL
             string setStatement = updateParser.Translate(transformer);
             string whereStatement = predicateParser.Translate(predicate);
 
-            query += $"{setStatement.Substring(0,setStatement.Length-2)} " +
-                $"{((whereStatement == "1")? "" : "WHERE" + predicateParser.Translate(predicate))}";
+            query += $"{setStatement.Substring(0, setStatement.Length - 2)} " +
+                $"{((whereStatement == "1") ? "" : "WHERE" + predicateParser.Translate(predicate))}";
 
             var result = this.pushQuery(query);
 
@@ -136,7 +132,7 @@ namespace CRUD_CS.DB.MySQL
             string query = $"DELETE FROM {typeof(EntityType).Name} ";
             string whereStatement = predicateParser.Translate(predicate);
 
-            query += (whereStatement == "1")? "" : whereStatement;
+            query += (whereStatement == "1") ? "" : whereStatement;
 
             var result = this.pushQuery(query);
 

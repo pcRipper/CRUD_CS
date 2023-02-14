@@ -195,7 +195,7 @@ namespace CRUD_CS.ExpressionReader
                 this.Visit(lambda.Body);
                 return m;
             }
-            else 
+            else
             {
                 switch (m.Method.Name)
                 {
@@ -323,7 +323,7 @@ namespace CRUD_CS.ExpressionReader
                 case ExpressionType.Multiply:
                     sb.Append(" * ");
                     break;
-                case ExpressionType.Add :
+                case ExpressionType.Add:
                     sb.Append(" + ");
                     break;
                 default:

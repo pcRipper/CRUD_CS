@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRUD_CS.DB.Entities
 {
@@ -32,9 +28,9 @@ namespace CRUD_CS.DB.Entities
         public _User fromQuery(DataRow toParse)
         {
             return new _User(
-                toParse[0] as string,    
-                toParse[1] as string,    
-                toParse[2] as string,    
+                toParse[0] as string,
+                toParse[1] as string,
+                toParse[2] as string,
                 toParse[3] as string,
                 Convert.ToDateTime(toParse[4]),
                 Convert.ToDouble(toParse[5])

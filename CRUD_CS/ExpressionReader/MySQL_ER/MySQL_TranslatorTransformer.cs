@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRUD_CS.ExpressionReader.MySQL_ER
 {
@@ -24,7 +20,7 @@ namespace CRUD_CS.ExpressionReader.MySQL_ER
                 {
                     case "Now":
                         sb.Append(parser.RepresentDate(DateTime.Now));
-                    break;
+                        break;
                 }
 
                 return m;

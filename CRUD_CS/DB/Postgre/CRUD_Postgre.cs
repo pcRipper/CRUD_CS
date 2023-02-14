@@ -1,14 +1,10 @@
 ﻿using CRUD_CS.DB.Entities;
+using CRUD_CS.ExpressionReader.Postgre_ER;
 using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
-using CRUD_CS.ExpressionReader.Postgre_ER;
 
 namespace CRUD_CS.DB.Postgre
 {
