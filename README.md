@@ -161,7 +161,6 @@ There are six rules for proper use :
 * Constructor parameters names must match with fields names ;
 * Entity class must have the same name as the table in DB ; 
 * Entity must implement `CRUD_Entityt` interface functions in order to parse from `DataRow` and to `string`;
-* Entity must have an empty new constructor ;
 
 There is an example for `User` class in `C#` and `MySQL` table :
   * `CRUD_Entity` interface
