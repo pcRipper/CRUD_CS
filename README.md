@@ -152,7 +152,7 @@ public static class MySQL_FEX
 }
 ```
 ***
-## <a id ="getting-started"g></a>Getting started ##
-### Entities
-### Expanding
-### Customisation
+## <a id ="getting-started"></a>Getting started ##
+### <a id="entities"></a>Entities
+### <a id="expanding"></a>Expanding
+### <a id="customisation"></a>Customisation
