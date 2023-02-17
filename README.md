@@ -156,11 +156,12 @@ public static class MySQL_FEX
 ### <a id="entities-htu"></a>Entities ###
 There are six rules for proper use :
 * Every field must be a property and public ;
-* Every field must go in same order as in the db table ;
-* Every field must have the same name in constructor too;
-* Entity class must have the same name as the table in DB; 
+* Every field must match in name with table fields, and generaly in count ;
+* Class must have constructor with all fields ;
+* Constructor parameters names must match with fields names ;
+* Entity class must have the same name as the table in DB ; 
 * Entity must implement `CRUD_Entityt` interface functions in order to parse from `DataRow` and to `string`;
-* Entity must have an empty new constructor;
+* Entity must have an empty new constructor ;
 
 There is an example for `User` class in `C#` and `MySQL` table :
   * `CRUD_Entity` interface
