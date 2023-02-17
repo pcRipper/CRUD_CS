@@ -154,25 +154,70 @@ public static class MySQL_FEX
 ***
 ## <a id ="getting-started"></a>Getting started ##
 ### <a id="entities"></a>Entities
-There are three rules for proper use :
+There are five rules for proper use :
 * Every field must be a property and public ;
 * Every field must go in same order as in the db table ;
 * Every field must have the same name and in constructor ; 
 * Entity must implement `CRUD_Entityt` interface functions in order to parse from `DataRow` and to `string`;
 * Entity must have an empty new constructor ;
 There is an example for `User` class in `C#` and `MySQL` table :
-* `CRUD_Entity` interface
-```cs
-    public interface CRUD_Entityt<Type> where Type : new()
-    {
-        public string toQuery();
-        public Type fromQuery(DataRow toParse);
-    }
-```
-* `_User` class
-```cs
-```
+  * `CRUD_Entity` interface
+  ```cs
+  public interface CRUD_Entityt<Type> where Type : new()
+  {
+      public string toQuery();
+      public Type fromQuery(DataRow toParse);
+  }
+  ```
+  * `_User` class
+  ```cs
+  class _User : CRUD_Entityt<_User>
+  {
+      public _User()
+      {
 
+      }
+      public _User(string _email, string _password, string _name, string _surname, DateTime _dob, double _sallary)
+      {
+          this._email = _email;
+          this._password = _password;
+          this._name = _name;
+          this._surname = _surname;
+          this._dob = _dob;
+          this._sallary = _sallary;
+      }
+      public string _email { get; set; }
+      public string _password { get; set; }
+      public string _name { get; set; }
+      public string _surname { get; set; }
+      public DateTime _dob { get; set; }
+      public double _sallary { get; set; }
 
+      public _User fromQuery(DataRow toParse)
+      {
+          return new _User(
+              toParse[0] as string,
+              toParse[1] as string,
+              toParse[2] as string,
+              toParse[3] as string,
+              Convert.ToDateTime(toParse[4]),
+              Convert.ToDouble(toParse[5])
+          );
+      }
+
+      public string toQuery()
+      {
+          return $"'{_email}','{_password}','{_name}','{_surname}','{_dob}',{_sallary}";
+      }
+
+      public override string ToString()
+      {
+          return $"{_email},{_password},{_name},{_surname},{_dob},{_sallary}";
+      }
+  }
+  ```
 ### <a id="expanding"></a>Expanding
+It can be easily expanded, because of interfaces usage, so go on.
 ### <a id="customisation"></a>Customisation
+You can customise each class or interface simply inheriting them, overriding their functions or adding this functional on top.
+There is only one problem with it : this project does not support relations.
