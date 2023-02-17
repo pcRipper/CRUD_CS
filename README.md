@@ -1,12 +1,12 @@
 ## CRUD with Expression Tree reader
 ### How does it work?
-+ #### [Basic Expression Tree reader, that creates `WHERE` statement](#basic-expression-tree-reader)
- + #### [Inhereted Readers for each DB](#inhereted-readers-bd)
-+ #### [Separated reader for `SET` statements](#translator-transformer)
-+ #### [Inhereted readers are using specialized Interfaces](#interfaces-i-readers)
- + #### [Parser_MySQL](#3.1)
- + #### [Parser_MySQL_Basic](#3.2)
-+ #### [Extended formal functionality for types](#4)
++ ### [Basic Expression Tree reader, that creates `WHERE` statement](#basic-expression-tree-reader)
+  + ### [Inhereted Readers for each DB](#inhereted-readers-bd)
++ ### [Separated reader for `SET` statements](#translator-transformer)
++ ### [Inhereted readers are using specialized Interfaces](#interfaces-i-readers)
+  + ### [Parser_MySQL](#3.1)
+  + ### [Parser_MySQL_Basic](#3.2)
++ ### [Extended formal functionality for types](#4)
 ***
 ### <a id="basic-expression-tree-reader"></a> Basic Expression Tree reader ###
 All logical expressions, that are required for data selection from the database, are transferred to the crud in the form of expressioned predicates
