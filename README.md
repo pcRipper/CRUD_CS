@@ -154,10 +154,11 @@ public static class MySQL_FEX
 ***
 ## <a id ="getting-started"></a>Getting started ##
 ### <a id="entities-htu"></a>Entities ###
-There are five rules for proper use :
+There are six rules for proper use :
 * Every field must be a property and public ;
 * Every field must go in same order as in the db table ;
-* Every field must have the same name and in constructor ; 
+* Every field must have the same name in constructor too;
+* Entity class must have the same name as the table in DB; 
 * Entity must implement `CRUD_Entityt` interface functions in order to parse from `DataRow` and to `string`;
 * Entity must have an empty new constructor;
 
