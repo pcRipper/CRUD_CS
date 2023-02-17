@@ -90,7 +90,7 @@ protected override Expression VisitNew(NewExpression node)
 Class, that holds this method, called MyQueryTranslatorTransformer unlike an ancestor - MyQueryTranslator.
 
 ### <a id="inhereted-readers-bd"></a>MySQL Reader
-Because of each DBMS provides different approach for types, functions, relations and syntax in general it is not possible to create single parser for 2 DB`s.
+Because of each DBMS provides different approach for types, functions, relations and syntax in general it is not possible to create single parser for 2 DB's.
 In this project you can find two inhereted versions of basic Expression Reader aka `MyQueryTranslator` for `MySQL` and `Postgre`.
 `MySQL` overrides many of existing Visit-methods in order to extend functional or replace it at all.
 For example this overrided method `VisitMethodCall` that handles methods :
