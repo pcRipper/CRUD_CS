@@ -159,7 +159,8 @@ There are five rules for proper use :
 * Every field must go in same order as in the db table ;
 * Every field must have the same name and in constructor ; 
 * Entity must implement `CRUD_Entityt` interface functions in order to parse from `DataRow` and to `string`;
-* Entity must have an empty new constructor ;
+* Entity must have an empty new constructor;
+
 There is an example for `User` class in `C#` and `MySQL` table :
   * `CRUD_Entity` interface
   ```cs
