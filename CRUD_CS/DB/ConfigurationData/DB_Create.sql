@@ -7,6 +7,6 @@ CREATE TABLE _User (
 	_name	  VARCHAR(30),
 	_surname  VARCHAR(30),
 	_dob	  DATE,
-	_sallary  FLOAT,
+	_sallary  DOUBLE
 )
 go

@@ -28,23 +28,23 @@ namespace CRUD_CS.ExpressionReader.Postgre_ER
         public Expression DATEDIFF(MyQueryTranslator translator, MethodCallExpression method)
         {
 
-            translator.QueryString = "DATEDIFF(";
+            translator.QueryString = "DATE_PART('day',";
             translator.Visit(method.Arguments[0]);
-            translator.QueryString = ",";
+            translator.QueryString = "::timestamp - ";
             translator.Visit(method.Arguments[1]);
-            translator.QueryString = ")";
+            translator.QueryString = "::timestamp)";
 
             return null;
         }
 
         public string RepresentDate(DateTime date)
         {
-            return $"'{date.ToString("dd-MM-yyyy")}'";
+            return $"'{date.ToString("yyyy-MM-dd")}'";
         }
 
         public Expression StringLength(MyQueryTranslator translator, MemberExpression member)
         {
-            translator.QueryString = "LEN(";
+            translator.QueryString = "Length(";
             translator.Visit(member.Expression);
             translator.QueryString = ")";
 

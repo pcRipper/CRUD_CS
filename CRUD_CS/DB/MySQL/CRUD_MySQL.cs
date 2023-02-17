@@ -96,7 +96,10 @@ namespace CRUD_CS.DB.MySQL
 
         public List<EntityType> Select<EntityType>(Expression<Predicate<EntityType>> predicate) where EntityType : CRUD_Entityt<EntityType>, new()
         {
-            string query = $"SELECT * FROM {typeof(EntityType).Name} WHERE " + predicateParser.Translate(predicate);
+            string query = $"SELECT * FROM {typeof(EntityType).Name}";
+            string whereClause = predicateParser.Translate(predicate);
+
+            query += (whereClause == "1") ? "" : $" WHERE {whereClause}" ;
 
             var result = this.pushQuery(query);
 
@@ -132,7 +135,7 @@ namespace CRUD_CS.DB.MySQL
             string query = $"DELETE FROM {typeof(EntityType).Name} ";
             string whereStatement = predicateParser.Translate(predicate);
 
-            query += (whereStatement == "1") ? "" : whereStatement;
+            query += (whereStatement == "1") ? "" : $" WHERE {whereStatement}";
 
             var result = this.pushQuery(query);
 
