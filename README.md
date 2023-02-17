@@ -4,8 +4,6 @@
   + ### [Inhereted Readers for each DB](#inhereted-readers-bd)
 + ### [Separated reader for `SET` statements](#translator-transformer)
 + ### [Inhereted readers are using specialized Interfaces](#interfaces-i-readers)
-  + ### [Parser_MySQL](#parser-mysql)
-  + ### [Parser_MySQL_Basic](#parser-postgre)
 + ### [Extended formal functionality for types](#extended-functional)
 ***
 ### [How to use](#getting-started)?
@@ -119,12 +117,42 @@ protected override Expression VisitMethodCall(MethodCallExpression m)
 This method is only adding some functional on top of the existing, using some instance of interface member, that i will talk about later.
 
 ### <a id="interfaces-i-readers"></a> Interfaces in Inhereted readers
+In order to make this code more flexible and independent,i added required interface to each basic db readers, for `MySQL_Translator` it looks like this :
+```cs
+public interface Parser_MySQL
+{
+    public Expression StringLength(MyQueryTranslator translator, MemberExpression member);
 
+    public Expression AddDays(MyQueryTranslator translator, MethodCallExpression method);
 
-### Extended types functional
+    public Expression DATEDIFF(MyQueryTranslator translator, MethodCallExpression method);
 
+    public string RepresentDate(DateTime date);
+}
+```
+With implementation in the form of `Parser_MySQL_Basic`, translator on his self requires it like this :
+```cs
+    class MySQL_Translator<Parser> : MyQueryTranslator
+        where Parser : Parser_MySQL, new()
+    {}
+```
+### <a id="extended-functional"></a>Extended types functional ###
+Many functions in, for example MySQL, does not match with `C#` ideology : some properties in cs are functions, some functions are static and so on.
+So, in order to resolve it in some way i added static class and some static bodyless functions in it, just to represent it db-like.
+Example for `MySQL` : 
+```cs
+public static class MySQL_FEX
+{
+    //Numeric Functions
+    public static double AVG(this double x) => x;
+    public static int CEIL(this float x) => x;
+    public static int FLOOR(this int x) => x;
+    // Date Functions
+    public static int DATEDIFF(this DateTime time, DateTime x) => 0;
+}
+```
 ***
-## <a id ="getting-started"></a>Getting started ##
+## <a id ="getting-started"g></a>Getting started ##
 ### Entities
 ### Expanding
 ### Customisation
