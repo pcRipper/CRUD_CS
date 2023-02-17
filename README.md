@@ -153,7 +153,7 @@ public static class MySQL_FEX
 ```
 ***
 ## <a id ="getting-started"></a>Getting started ##
-### <a id="entities"></a>Entities
+### <a id="entities"></a>Entities ###
 There are five rules for proper use :
 * Every field must be a property and public ;
 * Every field must go in same order as in the db table ;
@@ -216,8 +216,8 @@ There is an example for `User` class in `C#` and `MySQL` table :
       }
   }
   ```
-### <a id="expanding"></a>Expanding
+### <a id="expanding"></a>Expanding ###
 It can be easily expanded, because of interfaces usage, so go on.
-### <a id="customisation"></a>Customisation
+### <a id="customisation"></a>Customisation ###
 You can customise each class or interface simply inheriting them, overriding their functions or adding this functional on top.
 There is only one problem with it : this project does not support relations.
