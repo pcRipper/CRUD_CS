@@ -7,9 +7,8 @@
 + ### [Extended formal functionality for types](#extended-functional)
 ***
 ### [How to use](#getting-started)?
-+ ### [Entities](#entities-htu)
-+ ### [Expanding](#expanding-htu)
-+ ### [Customisation](#customisation-htu)
++ ### [Entities](#entities)
++ ### [Expanding](#expanding)
 ***
 ### <a id="basic-expression-tree-reader"></a> Basic Expression Tree reader ###
 All logical expressions, that are required for data selection from the database, are transferred to the crud in the form of expressioned predicates
@@ -117,7 +116,7 @@ protected override Expression VisitMethodCall(MethodCallExpression m)
 This method is only adding some functional on top of the existing, using some instance of interface member, that I will talk about later.
 
 ### <a id="interfaces-i-readers"></a> Interfaces in Inhereted readers
-In order to make this code more flexible and independent,I added required interface to each basic db readers, for `MySQL_Translator` it looks like this :
+In order to make this code more flexible and independent,i added required interface to each basic db readers, for `MySQL_Translator` it looks like this :
 ```cs
 public interface Parser_MySQL
 {
@@ -153,15 +152,13 @@ public static class MySQL_FEX
 ```
 ***
 ## <a id ="getting-started"></a>Getting started ##
-### <a id="entities-htu"></a>Entities ###
-There are six rules for proper use :
+### <a id="entities"></a>Entities
+There are five rules for proper use :
 * Every field must be a property and public ;
-* Every field must match in name with table fields, and generaly in count ;
-* Class must have constructor with all fields ;
-* Constructor parameters names must match with fields names ;
-* Entity class must have the same name as the table in DB ; 
+* Every field must go in same order as in the db table ;
+* Every field must have the same name and in constructor ; 
 * Entity must implement `CRUD_Entityt` interface functions in order to parse from `DataRow` and to `string`;
-
+* Entity must have an empty new constructor ;
 There is an example for `User` class in `C#` and `MySQL` table :
   * `CRUD_Entity` interface
   ```cs
@@ -175,10 +172,8 @@ There is an example for `User` class in `C#` and `MySQL` table :
   ```cs
   class _User : CRUD_Entityt<_User>
   {
-      public _User()
-      {
-
-      }
+      public _User() { }
+      
       public _User(string _email, string _password, string _name, string _surname, DateTime _dob, double _sallary)
       {
           this._email = _email;
@@ -188,6 +183,7 @@ There is an example for `User` class in `C#` and `MySQL` table :
           this._dob = _dob;
           this._sallary = _sallary;
       }
+
       public string _email { get; set; }
       public string _password { get; set; }
       public string _name { get; set; }
@@ -211,16 +207,20 @@ There is an example for `User` class in `C#` and `MySQL` table :
       {
           return $"'{_email}','{_password}','{_name}','{_surname}','{_dob}',{_sallary}";
       }
-
-      public override string ToString()
-      {
-          return $"{_email},{_password},{_name},{_surname},{_dob},{_sallary}";
-      }
   }
   ```
-### <a id="expanding-htu"></a>Expanding ###
-It can be easily expanded, because of interfaces usage, so go on.
-### <a id="customisation-htu"></a>Customisation ###
+  And `MySQl` syntax :
+  ```sql
+    CREATE TABLE _User (
+        _email    VARCHAR(40) NOT NULL PRIMARY KEY,
+        _password CHAR(32) NOT NULL,
+        _name	  VARCHAR(30),
+        _surname  VARCHAR(30),
+        _dob	  DATE,
+        _sallary  DOUBLE
+    )
+  ```
+### <a id="expanding"></a>Expanding ###
 You can customise each class or interface simply inheriting them, overriding their functions or adding this functional on top.
 There is only one problem with it : this project does not support relations.
 
