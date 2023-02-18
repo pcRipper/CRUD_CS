@@ -60,7 +60,7 @@ protected override Expression VisitBinary(BinaryExpression b)
 ```
 
 ### <a id="translator-transformer"></a>Separated reader ###
-When things goes to parsing `SET` statement there are another rules, so for this case i made an child for basic expression reader, who treats `VisitNew` method is another way.
+When things goes to parsing `SET` statement there are another rules, so for this case I made an child for basic expression reader, who treats `VisitNew` method is another way.
 According to the rules for Update method in CRUD you must pass two Expressions : 
  * `Expression<Func<EntityType,EntityType>>` -> to transform some record (class on side of c#) to new, changing something in it;
  * `Expression<Predicate<EntityType>>` -> to set the condition of selecting;
@@ -114,10 +114,10 @@ protected override Expression VisitMethodCall(MethodCallExpression m)
     }
 }
 ```
-This method is only adding some functional on top of the existing, using some instance of interface member, that i will talk about later.
+This method is only adding some functional on top of the existing, using some instance of interface member, that I will talk about later.
 
 ### <a id="interfaces-i-readers"></a> Interfaces in Inhereted readers
-In order to make this code more flexible and independent,i added required interface to each basic db readers, for `MySQL_Translator` it looks like this :
+In order to make this code more flexible and independent,I added required interface to each basic db readers, for `MySQL_Translator` it looks like this :
 ```cs
 public interface Parser_MySQL
 {
@@ -138,7 +138,7 @@ With implementation in the form of `Parser_MySQL_Basic`, translator on his self 
 ```
 ### <a id="extended-functional"></a>Extended types functional ###
 Many functions in, for example MySQL, does not match with `C#` ideology : some properties in cs are functions, some functions are static and so on.
-So, in order to resolve it in some way i added static class and some static bodyless functions in it, just to represent it db-like.
+So, in order to resolve it in some way I added static class and some static bodyless functions in it, just to represent it db-like.
 Example for `MySQL` : 
 ```cs
 public static class MySQL_FEX
