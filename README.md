@@ -211,7 +211,7 @@ There is an example for `User` class in `C#` and `MySQL` table :
       }
   }
   ```
-  And `MySQl` syntax :
+  * And `MySQl` syntax :
   ```sql
     CREATE TABLE _User (
         _email    VARCHAR(40) NOT NULL PRIMARY KEY,
