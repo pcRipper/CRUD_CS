@@ -215,10 +215,10 @@ There is an example for `User` class in `C#` and `MySQL` table :
   ```sql
     CREATE TABLE _User (
         _email    VARCHAR(40) NOT NULL PRIMARY KEY,
-        _password CHAR(32) NOT NULL,
-        _name	  VARCHAR(30),
+        _password CHAR(32)    NOT NULL,
+        _name	    VARCHAR(30),
         _surname  VARCHAR(30),
-        _dob	  DATE,
+        _dob	    DATE,
         _sallary  DOUBLE
     )
   ```
