@@ -15,7 +15,7 @@ All logical expressions, that are required for data selection from the database,
 ```
 Expression<Predicate<EntityType>>
 ``` 
-This form of exprressionde predicates allows to parsing and braking them into single blocks for each operator, member access, method call and etc.
+This form of exprressioned predicates allows to parsing and braking them into single blocks for each operator, member access, method call and etc.
 
 Basic Expression Reader parsing only common cases, such as :
 * arithmetical binary or logical operators -> (`+`,`-`,`<`,`>`,`&&`,`||`) ;
