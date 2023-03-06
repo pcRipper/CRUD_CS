@@ -1,12 +1,7 @@
 ﻿using CRUD_CS.DB.Entities;
 using CRUD_CS.DB.MySQL;
-using CRUD_CS.ExpressionReader.MySQL_ER;
-using CRUD_CS.DB.TypesFunctionalExtensions;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-
-using CRUD_CS.ExpressionReader.Postgre_ER;
 
 namespace CRUD_CS
 {

@@ -6,22 +6,15 @@ namespace CRUD_CS.ExpressionReader
     {
         protected override Expression VisitNew(NewExpression node)
         {
-            bool added = false;
-
             for (int k = 0; k < node.Arguments.Count; k++)
             {
                 var argument = node.Arguments[k];
                 string name = node.Constructor.GetParameters()[k].Name;
 
-                added = true;
-
                 sb.Append($"{name} = ");
                 this.Visit(argument);
 
-                if (added == true)
-                {
-                    sb.Append(", ");
-                }
+                sb.Append(", ");
             }
 
             return node;
