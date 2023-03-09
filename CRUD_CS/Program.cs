@@ -35,7 +35,7 @@ namespace CRUD_CS
             crud.SetConnection = crud.connect(new Dictionary<string, string>() {
                 { "db_name", "ZP_APSL" },
                 { "server",  "DESKTOP-AJ9MC4H" }
-            }).Key;
+            });
 
             Console.WriteLine(crud.isConnected);
 

@@ -1,10 +1,14 @@
-﻿using CRUD_CS.DB.Entities;
-using CRUD_CS.ExpressionReader.MySQL_ER;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
+
+using OneOf;
+
+using CRUD_CS.DB.Entities;
+using CRUD_CS.ExpressionReader.MySQL_ER;
+
 
 namespace CRUD_CS.DB.MySQL
 {
@@ -13,7 +17,7 @@ namespace CRUD_CS.DB.MySQL
         SqlConnection connection;
         MySQL_Translator<Parser_MySQL_Basic> predicateParser;
         MySQL_TranslatorTransformer<Parser_MySQL_Basic> updateParser;
-        public SqlConnection SetConnection { set { connection = value; } }
+        public OneOf<SqlConnection,Exception> SetConnection { set { connection = value.IsT0 ? value.AsT0 : null; } }
         public bool isConnected { get { return connection != null && connection.State == System.Data.ConnectionState.Open; } }
 
         public CRUD_MySQL()
@@ -24,7 +28,7 @@ namespace CRUD_CS.DB.MySQL
         }
 
 
-        public KeyValuePair<SqlConnection, Exception> connect(Dictionary<string, string> settings)
+        public OneOf<SqlConnection, Exception> connect(Dictionary<string, string> settings)
         {
             try
             {
@@ -38,14 +42,14 @@ namespace CRUD_CS.DB.MySQL
 
                 if (connection.State == ConnectionState.Open)
                 {
-                    return new KeyValuePair<SqlConnection, Exception>(connection, null);
+                    return connection;
                 }
 
-                return new KeyValuePair<SqlConnection, Exception>(null, new Exception("connection error!"));
+                return new Exception("connection error!");
             }
             catch (Exception error)
             {
-                return new KeyValuePair<SqlConnection, Exception>(null, error);
+                return error;
             }
         }
 

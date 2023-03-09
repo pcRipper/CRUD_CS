@@ -1,6 +1,7 @@
 ﻿using CRUD_CS.DB.Entities;
 using CRUD_CS.ExpressionReader.Postgre_ER;
 using Npgsql;
+using OneOf;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,7 +14,7 @@ namespace CRUD_CS.DB.Postgre
         NpgsqlConnection connection;
         Postgre_Translator<Parser_Postgre_Basic> predicateParser;
         Postgre_TranslatorTransformer<Parser_Postgre_Basic> updateParser;
-        public NpgsqlConnection SetConnection { set { connection = value; } }
+        public OneOf<NpgsqlConnection, Exception> SetConnection { set { connection = value.IsT0 ? value.AsT0 : null; } }
         public bool isConnected { get { return connection != null && connection.State == System.Data.ConnectionState.Open; } }
 
         public CRUD_Postgre()
@@ -24,7 +25,7 @@ namespace CRUD_CS.DB.Postgre
         }
 
 
-        public KeyValuePair<NpgsqlConnection, Exception> connect(Dictionary<string, string> settings)
+        public OneOf<NpgsqlConnection, Exception> connect(Dictionary<string, string> settings)
         {
             try
             {
@@ -38,14 +39,14 @@ namespace CRUD_CS.DB.Postgre
 
                 if (connection.State == ConnectionState.Open)
                 {
-                    return new KeyValuePair<NpgsqlConnection, Exception>(connection, null);
+                    return connection;
                 }
 
-                return new KeyValuePair<NpgsqlConnection, Exception>(null, new Exception("connection error!"));
+                return new Exception("connection error!");
             }
             catch (Exception error)
             {
-                return new KeyValuePair<NpgsqlConnection, Exception>(null, error);
+                return error;
             }
         }
 
